@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Data\Bar;
 use App\Data\Foo;
 use App\Data\Person;
+use App\Services\HelloService;
+use App\Services\ServicesImpl\HelloServiceIndonesia;
 use Tests\TestCase;
 
 class ServiceContainerTest extends TestCase
@@ -162,6 +164,30 @@ class ServiceContainerTest extends TestCase
 
         self::assertSame($foo, $bar1->getFoo());
         self::assertSame($bar1, $bar2);
+    }
+
+    /**
+     * Binding Interface ke Class
+     * ● Dalam praktek pengembangan perangkat lunak, hal yang bagus ketika membuat sebuah class yang
+     *   berhubungan dengan logic adalah, membuat interface sebagai kontrak nya. Harapannya agar
+     *   implementasi classnya bisa berbeda-beda tanpa harus mengubah kontrak interface nya
+     * ● Laravel memiliki fitur melakukan binding dari interface ke class secara mudah, kita bisa
+     *   menggunakan function bind(interface, class) atau bind(interface, closure) dimana closure nya
+     *   mengembalikan object class implementasinya, atau bisa juga menggunakan function
+     *   singleton(interface, class) dan singleton(interface, closure)
+     */
+
+    public function testInterfaceToClass()
+    {
+//         $this->app->singleton(HelloService::class, HelloServiceIndonesia::class); // cara 1
+
+        $this->app->singleton(HelloService::class, function ($app){
+            return new HelloServiceIndonesia();
+        }); // cara 2
+
+        $helloService = $this->app->make(HelloService::class); // Dependency Injection
+
+        self::assertEquals('Halo Budhi', $helloService->hello("Budhi"));
     }
 
 }
