@@ -79,4 +79,36 @@ class ServiceContainerTest extends TestCase
 
     }
 
+    /**
+     * Singleton
+     * ● Sebelumnya ketika menggunakan make(key), maka secara default Laravel akan membuat object
+     *   baru, atau jika menggunakan bind(key, closure), function closure akan selalu dipanggil
+     * ● Kadang ada kebutuhan kita membuat object singleton, yaitu satu object saja, dan ketika butuh, kita
+     *   cukup menggunakan object yang sama
+     * ● Pada kasus ini, kita bisa menggunakan function singleton(key, closure), maka secara otomatis
+     *   ketika kita menggunakan make(key), maka object hanya dibuat di awal, selanjutnya object yang
+     *   sama akan digunakan terus menerus ketika kita memanggil make(key)
+     */
+
+    public function testSingleton(){
+
+        // $this->app->singleton(class, {method_closure}); // cukup return method_closure nanti akan di panggil ketika proses initialize
+        $this->app->singleton(Person::class, function ($app) {
+            return new Person("budhi", "octaviansyah");
+        }); // app->bind(class) //
+
+        $person1 = $this->app->make(Person::class); // $person // app->make(class) // initialize object akan selalu sama secara identik
+        $person2 = $this->app->make(Person::class); // $person
+        $person3 = $this->app->make(Person::class); // $person
+        $person4 = $this->app->make(Person::class); // $person
+
+        self::assertEquals("budhi", $person1->firstName); // $person1
+        self::assertEquals("octaviansyah", $person1->lastName);
+        self::assertEquals("budhi", $person2->firstName); // $person2
+        self::assertEquals("octaviansyah", $person1->lastName);
+
+        self::assertSame($person1, $person2); // $person1 dan $person2 objek yang sama secara identik
+
+    }
+
 }
