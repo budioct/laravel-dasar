@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Data\Foo;
+use App\Data\Person;
 use Tests\TestCase;
 
 class ServiceContainerTest extends TestCase
@@ -43,6 +44,38 @@ class ServiceContainerTest extends TestCase
         self::assertEquals("Foo", $foo2->foo());
 
         self::assertNotSame($foo1, $foo2); // foo1 dan foo2 bukanlah objek yang sama secara identik
+
+    }
+
+    /**
+     * Mengubah Cara Membuat Dependency
+     * ● Saat kita menggunakan function make(key), secara otomatis Laravel akan membuat object, namun
+     *   kadang kita ingin menentukan cara pembuatan objectnya
+     * ● Pada kasus seperti ini, kita bisa menggunakan method bind(key, closure)
+     * ● Kita cukup return kan data yang kita inginkan pada function closure nya
+     * ● Saat kita menggunakan make(key) untuk mengambil dependencynya, secara otomatis function
+     *   closure akan dipanggil
+     * ● Perlu diingat juga, setiap kita memanggil make(key), maka function closure akan selalu dipanggil,
+     *   jadi bukan menggunakan object yang sama
+     */
+
+    public function testBinding()
+    {
+
+        // $this->app->bind(class, {method_closure}); // cukup return method_closure nanti akan di panggil ketika proses initialize
+        $this->app->bind(Person::class, function ($app) {
+            return new Person("budhi", "octaviansyah");
+        }); // app->bind(class) //
+
+        $person1 = $this->app->make(Person::class); // app->make(class) // initialize new class // akan selalu membuat object baru
+        $person2 = $this->app->make(Person::class);
+
+        self::assertEquals("budhi", $person1->firstName); // $person1
+        self::assertEquals("octaviansyah", $person1->lastName);
+        self::assertEquals("budhi", $person2->firstName); // $person2
+        self::assertEquals("octaviansyah", $person1->lastName);
+
+        self::assertNotSame($person1, $person2); // $person1 dan $person2 bukanlah objek yang sama secara identik
 
     }
 
