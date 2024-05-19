@@ -35,4 +35,14 @@ class Bar
         return $this->foo->foo() . " and Bar"; // foo() // return "Foo";
     }
 
+    public function getFoo(): Foo
+    {
+        return $this->foo;
+    }
+
+    public function setFoo(Foo $foo): void
+    {
+        $this->foo = $foo;
+    }
+
 }
