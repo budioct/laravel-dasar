@@ -111,4 +111,29 @@ class ServiceContainerTest extends TestCase
 
     }
 
+    /**
+     * Instance
+     * ● Selain menggunakan function singleton(key, closure), untuk membuat singleton object, kita juga
+     *   bisa menggunakan object yang sudah ada, dengan cara menggunakan function instance(key, object)
+     * ● Ketika menggunakan make(key), maka instance object tersebut akan dikembalikan
+     */
+
+    public function testInstance()
+    {
+        $person = new Person("budhi", "octaviansyah");
+        $this->app->instance(Person::class, $person);
+
+        $person1 = $this->app->make(Person::class); // $person // initialize object akan selalu sama secara identik
+        $person2 = $this->app->make(Person::class); // $person
+        $person3 = $this->app->make(Person::class); // $person
+        $person4 = $this->app->make(Person::class); // $person
+
+        self::assertEquals("budhi", $person1->firstName); // $person1
+        self::assertEquals("octaviansyah", $person1->lastName);
+        self::assertEquals("budhi", $person2->firstName); // $person2
+        self::assertEquals("octaviansyah", $person1->lastName);
+
+        self::assertSame($person1, $person2);
+    }
+
 }
