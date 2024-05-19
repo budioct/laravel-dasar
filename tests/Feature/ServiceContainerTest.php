@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Data\Bar;
 use App\Data\Foo;
 use App\Data\Person;
 use Tests\TestCase;
@@ -134,6 +135,33 @@ class ServiceContainerTest extends TestCase
         self::assertEquals("octaviansyah", $person1->lastName);
 
         self::assertSame($person1, $person2);
+    }
+
+    /**
+     * Dependency Injection
+     * ● Sekarang kita tahu bagaimana cara membuat dependency dan juga mendapatkan dependency di
+     *   Laravel, sekarang bagaimana caranya melakukan dependency injection?
+     * ● Secara default, jika kita membuat object menggunakan make(key), lalu Laravel mendeteksi
+     *   terdapat constructor, maka Laravel akan mencoba menggunakan dependency yang sesuai dengan
+     *   tipe yang dibutuhkan di Laravel
+     */
+
+    public function testDependencyInjection()
+    {
+        $this->app->singleton(Foo::class, function ($app){
+            return new Foo();
+        });
+        $this->app->singleton(Bar::class, function ($app){
+            $foo = $app->make(Foo::class);
+            return new Bar($foo);
+        });
+
+        $foo = $this->app->make(Foo::class);
+        $bar1 = $this->app->make(Bar::class);
+        $bar2 = $this->app->make(Bar::class);
+
+        self::assertSame($foo, $bar1->getFoo());
+        self::assertSame($bar1, $bar2);
     }
 
 }
