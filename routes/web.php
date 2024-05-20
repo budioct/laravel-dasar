@@ -49,6 +49,20 @@ use Illuminate\Support\Facades\Route;
  * ● Pada kasus seperti ini, kita bisa membuat fallback route, yaitu callback yang akan dieksekusi ketika
  *   tidak ada route yang cocok dengan halaman yang diakses
  * ● Kita bisa menggunakan function Route::fallback(closure)
+ *
+ * Rendering View
+ * ● Setelah kita membuat View, selanjutnya untuk me-render (menampilkan) View tersebut di dalam
+ *   Router, kita bisa menggunakan function Route::view(uri, template, array) atau menggunakan
+ *   view(template, array) di dalam closure function Route
+ * ● Dimana template adalah nama template, tanpa menggunakan blade.php, dan array berisikan data
+ *   variable yang ingin kita gunakan
+ *
+ * Nested View Directory
+ * ● View juga bisa disimpan di dalam directory lagi di dalam directory views
+ * ● Hal ini baik ketika kita sudah banyak membuat views, dan ingin melakukan management file views
+ * ● Namun ketika kita ingin mengambil views nya, kita perlu ganti menjadi titik, tidak menggunakan / (slash)
+ * ● Misal jika kita buat views di folder admin/profile.blade.php, maka untuk mengaksesnya kita
+ *   gunakan admin.profile
  */
 
 // http method get
@@ -70,4 +84,19 @@ Route::redirect("/test", "ommamat");
 // response fallback route (jika tidak path route maka anak di tampilkan halaman ini)
 Route::fallback(function (){
     return "<h1>404 Halaman Tidak Ada<br> by Anak Om Mamat</h1>";
+});
+
+// rendereing / tampilkan view
+Route::view("/hello", "hello", ["name" => "Anak Om Mamat"]); // view(path, name_view, parsing_data_ke_view) // // method static facade untuk handle path, view, dan data
+
+Route::get("/hello-again", function (){
+    return view("hello", ["name" => "Anak Om Mamat"]); // view(name_view, parsing_data_ke_view) // method static yang digunakan untuk view
+}); // get(path, method_closure) // method static facade untuk handle path, view, dan data
+
+// Nested View Directory
+// Misal jika kita buat views di folder admin/profile.blade.php, maka untuk mengaksesnya kita gunakan admin.profile
+Route::view("/world", "hello.world", ["name" => "Anak Om Mamat"]); // akses folder view dengan: directory.nama_file
+
+Route::get("/world-again", function (){
+    return view("hello.world", ["name" => "Anak Om Mamat"]);
 });
