@@ -170,12 +170,14 @@ return [
 
         /*
          * Application Service Providers...
+         * Add Service Provider yang telah di buat di sini!! (Registrasika supaya laravel mengerti)
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FooBarServiceProvider::class,
 
     ],
 
