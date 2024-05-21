@@ -1,0 +1,40 @@
+Static File
+Laravel Entry Point (gerbang masuk)
+● Entry Point atau jalur masuk utama dari Laravel sebenarnya adalah file index.php yang terdapat di
+  folder public
+● Ketika kita melakukan request /hello, sebenarnya kita mengakses /index.php/hello. Hal ini sudah
+  saya jelaskan di kelas PHP MVC
+● Lantas bagaimana jika kita ingin menambahkan file static? Misal JavaScript, CSS, HTML, Gambar
+  dan lain-lain?
+
+Static File
+● Untuk menambahkan static file, kita bisa dengan mudah menambahkan ke dalam folder ../public
+● Secara otomatis ketika kita mengakses url ke file static, maka web server akan mencari static file
+  terlebih dahulu, jika tidak ada, maka terakhir akan dikirim request nya ke index.php
+
+Untuk Apa Directory Resources?
+● Jika diperhatikan, ketika kita membuat project Laravel, terdapat folder resources
+● Selain views, di dalam resources terdapat folder css dan js
+● Kenapa ada file css dan js disana?
+● Jangan bingung dengan ini, ini adalah fitur tambahan Laravel yang memanfaatkan NodeJS, dimana
+  dengan NodeJS, kita bisa melakukan kompilasi file css dan js yang terdapat di folder resources agar
+  di minify (sehingga ukurannya kecil)
+● Setelah di compile, file js dan css akan tetap di pindahkan ke folder public
+● Jika teman-teman tidak tahu tentang NodeJS, bisa lanjutkan ikuti materi ini tanpa harus praktek
+  dengan perintah: npm run prod
+  jika tidak bisa kita perlu: npm install dulu baru npm run prod lagi
+
+jika proses Mixin sudah selesai maka akan ada alert di consoler
+setelah itu akan ada file mix-manifest.json, folder css, folder js di ../public
+
+ Laravel Mix v6.0.49
+✔ Compiled Successfully in 3858ms
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┬───────────┐
+│                                                                                                                                                                                       File │ Size      │
+├────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┼───────────┤
+│                                                                                                                                                                                 /js/app.js │ 88.1 KiB  │
+│                                                                                                                                                                     /js/app.js.LICENSE.txt │ 336 bytes │
+│                                                                                                                                                                                css/app.css │ 1 bytes   │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┴───────────┘
+webpack compiled successfully
+
