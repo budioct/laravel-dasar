@@ -79,7 +79,7 @@ Route::get("/ommamat", function (){
 });
 
 // http redirect halaman
-Route::redirect("/test", "ommamat");
+Route::redirect("/test-redirect", "ommamat");
 
 // response fallback route (jika tidak path route maka anak di tampilkan halaman ini)
 Route::fallback(function (){
@@ -99,4 +99,33 @@ Route::view("/world", "hello.world", ["name" => "Anak Om Mamat"]); // akses fold
 
 Route::get("/world-again", function (){
     return view("hello.world", ["name" => "Anak Om Mamat"]);
+});
+
+// Route Parameter
+Route::get("/products/{id}", function ($productId) {
+   return "Products : " . $productId;
+});
+
+Route::get("/products/{product}/items/{item}", function ($productId, $itemsId){
+   return "Products : " . $productId . ", Items : " . $itemsId;
+});
+
+// Route Parameter set regex
+Route::get("/categories/{id}", function (string $categoryId){
+    return "Categories : " . $categoryId;
+})->where("id", "[0-9]+"); // where({id}, regex) // menambah regular expression untuk route parameter / path variable parameter.. jika salah masukan route parameter akan di return Route::fallback()
+
+// Optional Route Parameter.. tambahkan "?" seperti {key_parameter?} // wajib set default value di param method closure
+Route::get("users/{id?}", function (string $userid = "404"){
+   return "Users : " . $userid;
+});
+
+
+// Routing Conflict.. selalu memproritaskan Route biasa baru RouteParameter
+Route::get('/conflict/budhi', function (){
+    return "Conflict Budhi Octaviansyah";
+});
+
+Route::get('/conflict/{name}', function ($name){
+    return "Conflict $name";
 });

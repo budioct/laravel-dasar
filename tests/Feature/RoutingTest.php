@@ -66,7 +66,7 @@ class RoutingTest extends TestCase
 
     public function testRedirectPage(){
 
-        $this->get('/test')
+        $this->get('/test-redirect')
             ->assertStatus(302)
             ->assertRedirect('/ommamat');
 
@@ -87,6 +87,78 @@ class RoutingTest extends TestCase
             ->assertSeeText('404 Halaman Tidak Ada by Anak Om Mamat');
     }
 
+    /**
+     * Route Parameter
+     * ● Kadang kita ingin mengirim parameter yang terdapat di bagian dari URL ketika membuat web.
+     *   Contoh misal parameter untuk id di URL /products/{productId}
+     * ● Laravel mendukung route parameter, dimana kita bisa menambahkan parameter di route url, dan
+     *   secara otomatis kita bisa ambil data nya di closure function yang kita gunakan di Route
+     * ● Untuk membuat route parameter, kita bisa gunakan {nama}. Kita bisa menambah beberapa route
+     *   parameter, asal namanya berbeda
+     * ● Data route parameter tersebut akan dikirim secara otomatis pada closure function parameter
+     *
+     * Regular Expression Constraints
+     * ● Kadang ada kalanya kita ingin menggunakan Route Parameter, namun parameternya memiliki pola
+     *   tertentu, misal parameternya hanya boleh angka misalnya
+     * ● Pada kasus seperti itu, kita bisa menambahkan regular expression di Route Parameter
+     * ● Caranya kita bisa gunakan function where() setelah pembuatan Route nya
+     *
+     * Optional Route Parameter
+     * ● Laravel juga mendukung Route Parameter Optional, artinya parameter nya tidak wajib diisi
+     * ● Untuk membuat sebuah route parameter menjadi optional, kita bisa tambahkan ? (tanda tanya)
+     * ● Namun perlu diingat, jika kita menjadikan route parameter nya optional, maka kita wajib
+     *   menambahkan default value di closure function nya
+     *
+     * Routing Conflict
+     * ● Saat membuat router dengan parameter, kadang terjadi conflict routing
+     * ● Di Laravel jika terjadi conflict tidak akan menyebabkan error, namun Laravel akan
+     *   memprioritaskan router yang pertama kali dibuat
+     */
 
+    public function testRouteParameter(){
+
+        $this->get("/products/1")
+            ->assertSeeText("Products : 1");
+
+        $this->get("/products/beras/items/5kg")
+            ->assertSeeText("Products : beras, Items : 5kg");
+
+    }
+
+    public function testRouteParameterWithRegex(){
+
+        $this->get("/categories/7")
+            ->assertSeeText("Categories : 7");
+
+        // jika kita salah masukan route parameter yang sudah di set number, maka akan return Route::fallback()
+        $this->get("salah")
+            ->assertSeeText("404 Halaman Tidak Ada by Anak Om Mamat");
+
+    }
+
+    public function testRouteOptionalParameter(){
+
+        $this->get("/users/12345")
+            ->assertSeeText("Users : 12345");
+
+        $this->get("/users/")
+            ->assertSeeText("Users : 404");
+    }
+
+    public function testRoutingConflict(){
+
+        /**
+         * // mencoba akses route dan route parameter yang di set sama
+         * pesan error jika Route Conflict
+         * Failed asserting that 'Conflict budhi' contains "Conflict Budhi Octaviansyah".
+         */
+
+        $this->get("/conflict/budi")
+            ->assertSeeText("Conflict budi");
+
+        $this->get("/conflict/budhi")
+            ->assertSeeText("Conflict Budhi Octaviansyah");
+
+    }
 
 }
