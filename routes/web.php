@@ -104,21 +104,23 @@ Route::get("/world-again", function (){
 // Route Parameter
 Route::get("/products/{id}", function ($productId) {
    return "Products : " . $productId;
-});
+})->name("product.detail"); // name(key_page) // Named Route penganti route path atau alias dari route path
 
 Route::get("/products/{product}/items/{item}", function ($productId, $itemsId){
    return "Products : " . $productId . ", Items : " . $itemsId;
-});
+})->name("product.item.detail"); // name(key_page) // Named Route penganti route path atau alias dari route path
 
 // Route Parameter set regex
 Route::get("/categories/{id}", function (string $categoryId){
     return "Categories : " . $categoryId;
-})->where("id", "[0-9]+"); // where({id}, regex) // menambah regular expression untuk route parameter / path variable parameter.. jika salah masukan route parameter akan di return Route::fallback()
+})
+    ->where("id", "[0-9]+") // where({id}, regex) // menambah regular expression untuk route parameter / path variable parameter.. jika salah masukan route parameter akan di return Route::fallback()
+    ->name("category.detail"); // name(key_page) // Named Route penganti route path atau alias dari route path
 
 // Optional Route Parameter.. tambahkan "?" seperti {key_parameter?} // wajib set default value di param method closure
 Route::get("users/{id?}", function (string $userid = "404"){
    return "Users : " . $userid;
-});
+})->name("user.detail"); // name(key_page) // Named Route penganti route path atau alias dari route path
 
 
 // Routing Conflict.. selalu memproritaskan Route biasa baru RouteParameter
@@ -128,4 +130,18 @@ Route::get('/conflict/budhi', function (){
 
 Route::get('/conflict/{name}', function ($name){
     return "Conflict $name";
+});
+
+// menggunakan Named Route
+Route::get("/produk/{id}", function ($id){
+    $link = route("product.detail", [
+        "id" => $id,
+        ]); // route(named_route, binding_param_closure dari RouteParameter
+    return "link : " . $link;
+});
+
+Route::get("/product-redirect/{id}", function ($id){
+   return redirect()->route("product.detail", [
+       "id" => $id,
+   ]);
 });

@@ -161,4 +161,24 @@ class RoutingTest extends TestCase
 
     }
 
+    /**
+     * Named Route
+     * ● Di Laravel, kita bisa menamai Route dengan sebuah nama
+     * ● Hal ini bagus ketika kita misal nanti butuh mendapatkan informasi tentang route tersebut, misal
+     *   route url nya, atau melakukan redirect ke route
+     * ● Dengan menambahkan nama di Route nya, kita bisa menggunakan nama route saja, tanpa khawatir
+     *   URL nya akan diubah
+     * ● Untuk menambahkan nama di route, kita cukup gunakan function name()
+     */
+
+    function testNamedRoute(){
+
+        $this->get("produk/12345")
+            ->assertSeeText("link : http://localhost/products/12345");
+
+        $this->get("/product-redirect/12345")
+            ->assertRedirect("/products/12345");
+
+    }
+
 }
