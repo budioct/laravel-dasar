@@ -24,3 +24,33 @@ Dependency Injection
   oleh Service Container
 ● Dengan demikian, kita bisa menambahkan dependency yang dibutuhkan di Constructor
   Controller, dan secara otomatis Laravel akan mengambil dependency tersebut dari Service Container
+
+Request
+● Di PHP, biasanya ketika kita ingin mendapatkan detail dari request biasanya kita lakukan
+  menggunakan global variable seperti $_GET, $_POST, dan lain-lain
+● Di Laravel, kita tidak perlu melakukan itu lagi, HTTP Request di bungkus dalam sebuah object dari
+  class Illuminate\Http\Request
+● Dan kita bisa menambahkan Request di parameter function di Router atau di Controller, dan
+  secara otomatis nanti Laravel akan melakukan dependency injection data Request tersebut
+
+Request Path
+● Object Request banyak memiliki method yang bisa kita gunakan untuk mendapatkan informasi
+  Path dan URL
+● $request->path() untuk mendapatkan path, misal http://example.com/foo/bar, akan
+  mengembalikan foo/bar
+● $request->url() untuk mendapat URL tanpa query parameter
+● $request->fullUrl() untuk mendapatkan URL dengan query parameter
+
+Request Method
+● Request juga bisa digunakan untuk mendapatkan informasi HTTP Method
+● $request->method() akan mengembalikan HTTP Method
+● $request->isMethod(method) digunakan untuk mengecek apakah request memiliki HTTP method
+  sesuai parameter atau tidak, misal $request->isMethod(‘post’)
+
+Request Method
+● Untuk mendapatkan informasi HTTP Header, kita juga bisa menggunakan object Request
+● $request->header(key) digunakan untuk mendapatkan data header dengan key parameter
+● $request->header(key, default) digunakan untuk mendapatkan data header dengan key parameter,
+  jika tidak ada maka akan mengembalikan data default nya
+● $request->bearerToken() digunakan untuk mendapatkan informasi token Bearer yang terdapat di
+  header Authorization, dan secara otomatis menghapus prefix Bearer nya
