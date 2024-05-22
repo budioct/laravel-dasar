@@ -1,0 +1,26 @@
+Controller
+● Membuat Route memang mudah, tapi jika kita harus menyimpan semua logic aplikasi kita di
+  closure function Route, lama-lama akan sulit untuk dilakukan
+● Di Laravel kita bisa menggunakan Controller sebagai tempat menyimpan logic dari Route, sehingga
+  tidak perlu kita lakukan lagi di Route
+● Controller direpresentasikan sebagai class, dan penamaan class nya selalu diakhiri dengan
+  Controller, misal UserController, ProductController, CategoryController, dan lain-lain
+
+Membuat Controller
+● Untuk membuat Controller, kita bisa membuatnya di namespace App\Http\Controllers, dimana
+  class Controller adalah class turunan dari class Illuminate\Routing\Controller
+● Agar lebih mudah, kita bisa menggunakan file artisan untuk membuat controller, caranya dengan
+  menggunakan perintah :
+  php artisan make:controller NamaController
+
+Membuat Function di Controller
+● Sebagai pengganti closure function di Route, kita bisa membuat function di Controller, dan
+  menaruh semua logic web kita di function Controller
+● Selanjutnya, kita bisa meregistrasikan function Controller tersebut ke Route, dengan cara
+  mengganti parameter closure di route dengan array yang berisi class Controller dan juga function name nya
+
+Dependency Injection
+● Controller mendukung Dependency Injection, pembuatan object Controller, sebenarnya dilakukan
+  oleh Service Container
+● Dengan demikian, kita bisa menambahkan dependency yang dibutuhkan di Constructor
+  Controller, dan secara otomatis Laravel akan mengambil dependency tersebut dari Service Container

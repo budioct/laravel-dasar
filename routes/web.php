@@ -145,3 +145,8 @@ Route::get("/product-redirect/{id}", function ($id){
        "id" => $id,
    ]);
 });
+
+
+// route yang di teruskan ke Controller
+Route::get("/controller/hello", [App\Http\Controllers\HelloController::class, "hello"]); // get(path, [reference_object_controller, method])
+Route::get("/controller/hello/{name}", [App\Http\Controllers\HelloController::class, "helloDependecyInjection"]);
