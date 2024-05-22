@@ -163,6 +163,10 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::post("/input/hello/array", [App\Http\Controllers\InputController::class, "arrayImput"]);
 
     Route::post("/inpute/type", [App\Http\Controllers\InputController::class, "inputType"]);
+    Route::post("/input/filter/only", [App\Http\Controllers\InputController::class, "filterOnly"]);
+    Route::post("/input/filter/except", [App\Http\Controllers\InputController::class, "filterExcept"]);
+    Route::post("/input/filter/merge", [App\Http\Controllers\InputController::class, "filterMerge"]);
+
 }); // tanpa pengecekan middleware csrf_token laravel
 
 

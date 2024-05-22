@@ -111,3 +111,22 @@ Date
 ● Laravel menggunakan library Carbon untuk memanipulasi tipe data Date dan Time
 ● https://github.com/briannesbitt/Carbon
 
+Filter Request Input
+● Kadang pada saat kita menerima input data dari user, kita ingin secara mudah menerima semua key
+  input, lalu menyimpannya ke database misalnya
+● Pada kasus seperti ini, kadang sangat berbahaya jika misal user secara tidak sengaja mengirim key
+  yang salah, lalu kita mencoba melakukan update key yang salah itu ke database
+● Untungnya Laravel memiliki helper method di class Request untuk melakukan filter input
+
+Method Filter Request Input
+● $request->only([key1, key2]) digunakan untuk mengambil hanya input yang kita sebutkan di parameter
+● $request->except([key1, key2]) digunakan untuk mengambil semua input, tapi tidak dengan yang
+  kita sebutkan di parameter
+
+Merge Input
+● Kadang-kadang kita ingin menambahkan default input value ketika input tersebut tidak dikirim di
+  request
+● Kita bisa menggunakan method merge(array) untuk menambah input ke request, dan jika ada key
+  yang sama, otomatis akan diganti
+● Atau mergeIfMissing(array) untuk menambah input ke request, dan jika input dengan kay yang
+  sama sudah ada, maka akan dibatalkan

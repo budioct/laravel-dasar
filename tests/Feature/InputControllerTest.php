@@ -76,4 +76,53 @@ class InputControllerTest extends TestCase
 
     }
 
+    public function testFilterOnly(){
+
+        $this->post("/input/filter/only", [
+            "name" => [
+                "first" =>"budhi",
+                "middle" =>"22",
+                "last" =>"octaviansyah",
+            ]
+        ])
+            ->assertSeeText("budhi")
+            ->assertSeeText("octaviansyah")
+            ->assertDontSeeText("22");
+
+        // "middle" =>"22" // akan di abaikan karena tidak di sebut dalam parameter only([name.first, name.last])
+
+    }
+
+    public function testFilterExcept(){
+
+        $this->post("/input/filter/except", [
+            "username" => "budioct",
+            "password" => "rahasia",
+            "admin" => "true",
+        ])
+            ->assertSeeText("budioct")
+            ->assertSeeText("rahasia")
+            ->assertDontSeeText("true");
+
+        // "admin" => "true" // akan di abaikan karena di sebut dalam parameter except([admin])
+
+    }
+
+    public function testFilterMerge(){
+
+        $this->post("/input/filter/merge", [
+            "username" => "budioct",
+            "password" => "rahasia",
+            "admin" => "true",
+        ])
+            ->assertSeeText("budioct")
+            ->assertSeeText("rahasia")
+            ->assertSeeText("admin")->assertSeeText("false")
+            ->assertDontSeeText("true");
+
+        // "admin" => "true" // akan di set default value karena di sebut dalam parameter merge(["admin" => false])
+
+    }
+
+
 }

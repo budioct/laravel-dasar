@@ -33,7 +33,8 @@ class InputController extends Controller
 
     }
 
-    public function inputType(Request $request): string{
+    public function inputType(Request $request): string
+    {
 
         $name = $request->input("name"); // hasil input langsung di konversi pada type yang di inginkan
         $married = $request->boolean("married");
@@ -45,6 +46,27 @@ class InputController extends Controller
             "married" => $married,
             "birth_data" => $birthDate->format("Y-m-d")
         ]);
+
+    }
+
+    public function filterOnly(Request $request): string
+    {
+        $name = $request->only(["name.first", "name.last"]); // only([]) // yang di sebutkan di dalam parameter akan di ambil datanya.. yang tidak di sebutkan tidak akan di ambil
+        return json_encode($name);
+    }
+
+    public function filterExcept(Request $request): string
+    {
+        $user = $request->except(["admin"]); // except([]) // yang di sebutkan di dalam paramater tidak akan di ambil datanya.. yang tidak di sebutkan akan di ambil datanya
+        return json_encode($user);
+    }
+
+    public function filterMerge(Request $request): string{
+
+        $request->merge(["admin" => false]); // merge([]) // yang di sebutkan di dalam parameter akan ada default value, jika tidak di kirimkan atau di kirimkan key:value nya dalam request
+        $user = $request->input();
+
+        return json_encode($user);
 
     }
 
