@@ -65,7 +65,7 @@ class FooBarServiceProvider extends ServiceProvider implements DeferrableProvide
         // cukup dengan function make(key/class), bind(key, closure), singleton(key, closure) instance(key, object)
         // class Application untuk membuat dependency secara otomatis
 
-        echo "FooBarServiceProvider";
+        //echo "FooBarServiceProvider";
 
         $this->app->singleton(Foo::class, function ($app) {
             return new Foo();
