@@ -94,3 +94,20 @@ Dynamic Properties
 ● Laravel juga mendukung Dynamic Properties yang secara otomatis akan mengambil key dari input Request
 ● Misal ketika kita menggunakan $request->first_name, jika dalam object Request tidak ada
   property dengan nama $first_name, maka secara otomatis akan mengambil input dengan key first_name
+
+Input Type
+● Class Request di Laravel memiliki beberapa helper method yang digunakan untuk melakukan
+  konversi input secara otomatis
+● Ini bisa digunakan untuk mempermudah kita ketika ingin otomatis melakukan konversi input data
+  ke tipe data yang kita inginkan
+
+ Boolean
+● Untuk melakukan konversi tipe data input secara otomatis ke boolean, kita bisa gunakan method
+  boolean(key, default) pada class Request
+
+Date
+● Untuk melakukan konversi tipe data ke Date secara otomatis, kita bisa gunakan method date(key,
+  pattern, timezone) pada class Request
+● Laravel menggunakan library Carbon untuk memanipulasi tipe data Date dan Time
+● https://github.com/briannesbitt/Carbon
+

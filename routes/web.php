@@ -161,6 +161,8 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::post("/input/hello/first", [App\Http\Controllers\InputController::class, "helloFirstName"]);
     Route::post("/input/hello/input", [App\Http\Controllers\InputController::class, "helloCollectInputAll"]);
     Route::post("/input/hello/array", [App\Http\Controllers\InputController::class, "arrayImput"]);
+
+    Route::post("/inpute/type", [App\Http\Controllers\InputController::class, "inputType"]);
 }); // tanpa pengecekan middleware csrf_token laravel
 
 
