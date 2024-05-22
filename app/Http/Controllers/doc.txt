@@ -54,3 +54,43 @@ Request Method
   jika tidak ada maka akan mengembalikan data default nya
 ● $request->bearerToken() digunakan untuk mendapatkan informasi token Bearer yang terdapat di
   header Authorization, dan secara otomatis menghapus prefix Bearer nya
+
+
+Request Input
+● Saat membuat aplikasi web, kita tahu bahwa dalam HTTP Request kita bisa mengirim data, baik itu
+  melalui query parameter, atau melalui body (misal dalam bentuk form)
+● Biasanya kita menggunakan $_GET atau $_POST atau $_FILES, namun di Laravel, kita bisa
+  menggunakan object Request untuk mendapatkan input yang dikirim melalui HTTP Request
+
+Mengambil Input
+● Untuk mengambil input yang dikirim oleh user, tidak peduli apapun HTTP Method yang digunakan,
+  dan dari mana asalnya, entah dari body atau query parameter
+● Untuk mengambil input user, kita bisa gunakan method input(key, default) pada Request, dimana
+  jika key nya tidak ada, maka akan mengembalikan default value di parameter
+
+Nested Input
+● Salah satu fitur yang powerful di Laravel adalah, kita bisa mengambil input nested hanya dengan
+  menggunakan titik
+● Misal jika kita menggunakan $requet->input(‘name.first’), maka artinya itu mengambil key first di
+  dalam name, Ini cocok ketika kita kirim request dalam bentuk form atau json
+
+Mengambil Semua Input
+● Untuk mengambil semua input yang terdapat di HTTP Request, baik itu dari query param ataupun
+  body, kita bisa menggunakan method input() tanpa parameter milik Request
+● Return value dari method input() ini adalah array
+
+Mengambil Array Input
+● Laravel juga memiliki kemampuan untuk mengambil value dari input berupa array
+● Misal kita bisa gunakan $request->input(‘products.*.name’), artinya kita mengambil semua name
+  yang ada di array products
+
+Input Query String
+● Method input() digunakan untuk mengambil data di semua input, baik itu query param ataupun body
+● Jika misal kita hanya butuh mengambil data di query param, kita bisa menggunakan method
+  $request->query(key)
+● Atau jika semua query dalam bentuk array, kita bisa gunakan $request->query() tanpa parameter key
+
+Dynamic Properties
+● Laravel juga mendukung Dynamic Properties yang secara otomatis akan mengambil key dari input Request
+● Misal ketika kita menggunakan $request->first_name, jika dalam object Request tidak ada
+  property dengan nama $first_name, maka secara otomatis akan mengambil input dengan key first_name
