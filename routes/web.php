@@ -167,6 +167,7 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::post("/input/filter/except", [App\Http\Controllers\InputController::class, "filterExcept"]);
     Route::post("/input/filter/merge", [App\Http\Controllers\InputController::class, "filterMerge"]);
 
+    Route::post("/file/upload", [App\Http\Controllers\FileController::class, "upload"]);
 }); // tanpa pengecekan middleware csrf_token laravel
 
 
