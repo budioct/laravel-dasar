@@ -188,6 +188,20 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::get("/redirect/action", [App\Http\Controllers\RedirectController::class, "redirectAction"]);
     Route::get("/redirect/away", [App\Http\Controllers\RedirectController::class, "redirectAway"]);
 
+    // middleware
+    //Route::get("/middleware/api", function (){
+    //    return "OK";
+    //})->middleware("contoh"); // set dengan alias
+        //->middleware(\App\Http\Middleware\ContohMiddleware::class); // set dengan class middleware
+    Route::get("/middleware/group", function (){
+        return "GROUP";
+    })->middleware(["sb"]); // set dari group
+    Route::get("/middleware/api", function (){
+        return "OK";
+    })->middleware("contoh:SB,401"); // contoh:SB,401 // name_alias_middleware:$key,$status // mengirim parameter ke middleware yang di buat
+
 }); // tanpa pengecekan middleware csrf_token laravel
 
+Route::post("/file/upload", [App\Http\Controllers\FileController::class, "upload"])
+    ->middleware(App\Http\Middleware\VerifyCsrfToken::class); // Exclude Middleware, non-aktifkan middleware
 
