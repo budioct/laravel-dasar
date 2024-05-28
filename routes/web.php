@@ -176,6 +176,10 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::get("/response/type/file", [App\Http\Controllers\ResponseController::class, "responseFile"]);
     Route::get("/response/type/dwonload", [App\Http\Controllers\ResponseController::class, "responseDwonload"]);
 
+    Route::get("/cookie/set", [App\Http\Controllers\CookieController::class, "createCookie"]);
+    Route::get("/cookie/get", [App\Http\Controllers\CookieController::class, "getCookie"]);
+    Route::get("/cookie/clear", [App\Http\Controllers\CookieController::class, "clearCookie"]);
+
 }); // tanpa pengecekan middleware csrf_token laravel
 
 
