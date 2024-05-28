@@ -205,3 +205,5 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
 Route::post("/file/upload", [App\Http\Controllers\FileController::class, "upload"])
     ->middleware(App\Http\Middleware\VerifyCsrfToken::class); // Exclude Middleware, non-aktifkan middleware
 
+Route::get("/form", [App\Http\Controllers\FormController::class, "form"]);
+Route::post("/form", [App\Http\Controllers\FormController::class, "submitForm"]);
