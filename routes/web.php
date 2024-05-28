@@ -180,6 +180,14 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     Route::get("/cookie/get", [App\Http\Controllers\CookieController::class, "getCookie"]);
     Route::get("/cookie/clear", [App\Http\Controllers\CookieController::class, "clearCookie"]);
 
+    Route::get("/redirect/from", [App\Http\Controllers\RedirectController::class, "redirectFrom"]);
+    Route::get("/redirect/to", [App\Http\Controllers\RedirectController::class, "redirectTo"]);
+    Route::get("/redirect/name", [App\Http\Controllers\RedirectController::class, "redirectName"]);
+    Route::get("/redirect/name/{name}", [App\Http\Controllers\RedirectController::class, "redirectHello"])
+        ->name("redirect-hello");
+    Route::get("/redirect/action", [App\Http\Controllers\RedirectController::class, "redirectAction"]);
+    Route::get("/redirect/away", [App\Http\Controllers\RedirectController::class, "redirectAway"]);
+
 }); // tanpa pengecekan middleware csrf_token laravel
 
 
