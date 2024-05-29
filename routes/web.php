@@ -243,3 +243,7 @@ Route::get('/url/action', function () {
     //return url()->action([App\Http\Controllers\FormController::class, 'form'], []);
     return Illuminate\Support\Facades\URL::action([App\Http\Controllers\FormController::class, 'form'], []);
 });
+
+// session
+Route::get("/session/create", [App\Http\Controllers\SessionController::class, "createSession"]);
+Route::get("/session/get", [App\Http\Controllers\SessionController::class, "getSession"]);
