@@ -247,3 +247,17 @@ Route::get('/url/action', function () {
 // session
 Route::get("/session/create", [App\Http\Controllers\SessionController::class, "createSession"]);
 Route::get("/session/get", [App\Http\Controllers\SessionController::class, "getSession"]);
+
+// Error Handling: Report
+Route::get("/error/sample", function (){
+    throw new Exception("Simple Error TEST"); // Exception(pesan_error)
+});
+// Error Handling: Manual Error Report
+Route::get("/error/manual", function (){
+    report(new Exception("Simple Error TEST"));
+    return "OK manual error report";
+});
+// Error Handling: Costum Validation Error Report
+Route::get("/error/validation", function (){
+    throw new App\Exceptions\ValidationException("Validation Error TEST");
+});

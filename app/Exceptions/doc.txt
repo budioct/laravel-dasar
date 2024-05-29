@@ -1,0 +1,43 @@
+Error Handling
+● Saat kita membuat aplikasi Laravel, secara default Laravel akan membuatkan Error Handling di
+  class App\Exceptions\Handler
+● Class ini bertanggung jawab menangkap exception yang terjadi di aplikasi kita, dan merender ke user
+
+Konfigurasi Error Handler
+● Error Handler akan membaca konfigurasi debug di config/app.php
+● Jika debug bernilai true, maka Error Handler akan memperlihatkan detail error yang terjadi, jika
+  false, maka hanya menampilkan error sederhana
+● Ketika menjalankan di local, agar lebih mudah ketika mencari detail error, selalu gunakan nilai true,
+  namun ketika di production selalu gunakan nilai false, agar informasi sensitive tidak terlihat ketika terjadi error
+
+Error Reporter
+● Saat terjadi exception, kadang-kadang kita ingin melaporkan error tersebut, contoh misal ke
+  Telegram, Slack atau Sentry
+● Laravel mendukung pembuatan fitur Error Reporter, dimana kita bisa menambah logic ketika
+  terjadi error
+● Untuk melakukan itu, kita bisa menggunakan function reportable() di Error ../app/Exceptions/Handler.php, dan kita bisa
+  lakukan di method register()
+● Kita bisa menambahkan lebih dari satu Error Reporter
+● Secara default semua Error Reporter akan dieksekusi ketika terjadi error, jika kita ingin
+  menghentikan eksekusi Error Reporter selanjutnya, silahkan return false pada callback reporter nya
+
+Manual Error Report
+● Kadang-kadang ada kasus dimana kita tidak ingin tampilan halaman web kita menjadi error ketika
+  terjadi exception.
+● Pada kasus ini biasanya kita akan melakukan try-catch pada kode program kita
+● Laravel mendukung fitur untuk melakukan manual report exception, ketika kita melakukan report,
+  maka Error Reporter akan dieksekusi tanpa harus menampilkan halaman error
+● Untuk melakukan manual report, kita bisa gunakan helper function report(exception)
+
+Ignore Exception
+● Kadang ada kasus ketika terjadi error, kita tidak ingin melakukan report error tersebut
+● Contoh jika terjadi error validasi, kita tidak perlu melakukan report
+● Di Handler, terdapat property $dontReport, yang bisa kita gunakan untuk mendaftarkan jenis
+  exception yang tidak mau kita report
+
+Rendering Exception
+● Secara default, Laravel akan melakukan render halaman error ketika terjadi exception
+● Namun jika kita mau, kita juga bisa membuat halaman web sendiri ketika terjadi exception
+● Untuk mendaftarkannya, kita bisa gunakan method renderable() di Handler
+● Contoh ketika terjadi validation error, kita ingin menampilkan halaman web Bad Request dan
+  HTTP Status 400 misalnya
