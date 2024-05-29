@@ -221,3 +221,25 @@ Route::post("/file/upload", [App\Http\Controllers\FileController::class, "upload
 
 Route::get("/form", [App\Http\Controllers\FormController::class, "form"]);
 Route::post("/form", [App\Http\Controllers\FormController::class, "submitForm"]);
+
+// URL Generator
+Route::get("/url/current", function () {
+    //return url()->current(); // current() // untuk mendapatkan url saat ini tanpa query param
+    //return Illuminate\Support\Facades\URL::current(); // current() // untuk mendapatkan url saat ini tanpa query param
+    //return url()->full(); // url() static method // full() untuk mendapatkan url saat ini dengan query param
+    return Illuminate\Support\Facades\URL::full(); // facade
+});
+
+// URL Generator named
+Route::get("/redirect/named", function () {
+    //return route("redirect-hello", ["name" => "budhi"]);
+    //return url()->route("redirect-hello", ["name" => "budhi"]);
+    return Illuminate\Support\Facades\URL::route("redirect-hello", ["name" => "budhi"]);
+});
+
+// URL Generator action
+Route::get('/url/action', function () {
+    //return action([App\Http\Controllers\FormController::class, 'form'], []);
+    //return url()->action([App\Http\Controllers\FormController::class, 'form'], []);
+    return Illuminate\Support\Facades\URL::action([App\Http\Controllers\FormController::class, 'form'], []);
+});
