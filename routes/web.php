@@ -261,3 +261,14 @@ Route::get("/error/manual", function (){
 Route::get("/error/validation", function (){
     throw new App\Exceptions\ValidationException("Validation Error TEST");
 });
+
+// HTTP Exception
+Route::get('/abort/400', function (){
+    abort(400, "Ups Validation Error"); // 400 Bad Request
+});
+Route::get('/abort/401', function (){
+    abort(401); // 401 Unauthorized
+});
+Route::get('/abort/500', function (){
+    abort(500); // 500 Internal Server Error
+});

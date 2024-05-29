@@ -19,3 +19,21 @@ Route Controller
 Multiple Route Group
 ● Route juga bisa menggunakan beberapa jenis group, misal kita ingin membuat group dengan nama
   prefix sama, dan middleware sama, maka bisa kita lakukan juga dengan Route di Laravel
+
+
+HTTP Exception
+● Laravel menyediakan sebuah class exception yang bisa kita gunakan untuk mempermudah ketika
+  kita ingin membuat error mengikuti HTTP Status Code
+● Class exception tersebut adalah Symfony\Component\HttpKernel\Exception\HttpException
+● Laravel juga menyediakan helper function untuk membuat exception tersebut hanya dengan
+  menggunakan method abort(statusCode), secara otomatis akan throw HttpException dengan status code tersebut
+
+HTTP Error Page
+● Secara default halaman error untuk HTTP Exception sudah ditangani oleh Handler class
+● Namun jika kita ingin membuat error page sendiri, kita tidak perlu manual meregistrasikan satu per satu
+● Laravel akan secara otomatis menggunakan view dengan nama sesuai status code nya, misal jika
+  kita lakukan abort(400), maka Laravel akan menggunakan view
+  resources/views/errors/400.blade.php, jika tidak ada, maka akan menggunakan 4xx.blade.php, jika
+  tidak ada, maka akan menggunakan default error page Handler
+● Begitu juga contoh abort(500), akan menggunakan 500.blade.php, atau 5xx.blade.php atau defaul error page Handler
+● Untuk mendapat object exception nya, kita bisa gunakan variable $exception di template nya
