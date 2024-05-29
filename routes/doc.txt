@@ -1,0 +1,21 @@
+Route Group
+● Laravel mendukung grouping Route, dimana dengan melakukan grouping Route, kita bisa share
+  konfigurasi antar Route dalam satu group
+● Ini lebih mudah dibanding membuat konfigurasi Route satu per satu
+
+Route Prefix
+● Laravel mendukung pembuatan Route Prefix, dimana kita bisa membuat prefix (awalan) untuk url route
+● Ini sangat berguna ketika kita ingin membuat Route dengan URL yang awalannya hampir sama semua
+● Kita bisa menggunakan function Route::prefix(prefix)->group(closure)
+
+Route Middleware
+● Route Middleware mendukung grouping berdasarkan middleware, dimana secara otomatis semua
+  route akan memiliki middleware tersebut
+
+Route Controller
+● Route controller memungkinkan kita membuat route dengan controller yang sama
+● Ini mempermudah ketika kita ingin membuat beberapa route dengan class controller yang sama
+
+Multiple Route Group
+● Route juga bisa menggunakan beberapa jenis group, misal kita ingin membuat group dengan nama
+  prefix sama, dan middleware sama, maka bisa kita lakukan juga dengan Route di Laravel

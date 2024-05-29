@@ -24,7 +24,7 @@ class ResponseControllerTest extends TestCase
             ->assertSeeText("budhi")
             ->assertSeeText("octaviansyah")
             ->assertHeader("Content-Type", "application/json")
-            ->assertHeader("Author", "oct")
+            ->assertHeader("Author", "budioct")
             ->assertHeader("App", "Belajar Laravel");
 
     }

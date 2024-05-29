@@ -171,14 +171,19 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
 
     Route::get("/response/hello", [App\Http\Controllers\ResponseController::class, "response"]);
     Route::get("/response/header", [App\Http\Controllers\ResponseController::class, "header"]);
-    Route::get("/response/type/view", [App\Http\Controllers\ResponseController::class, "responseView"]);
-    Route::get("/response/type/json", [App\Http\Controllers\ResponseController::class, "responseJson"]);
-    Route::get("/response/type/file", [App\Http\Controllers\ResponseController::class, "responseFile"]);
-    Route::get("/response/type/dwonload", [App\Http\Controllers\ResponseController::class, "responseDwonload"]);
 
-    Route::get("/cookie/set", [App\Http\Controllers\CookieController::class, "createCookie"]);
-    Route::get("/cookie/get", [App\Http\Controllers\CookieController::class, "getCookie"]);
-    Route::get("/cookie/clear", [App\Http\Controllers\CookieController::class, "clearCookie"]);
+    Route::prefix("/response/type")->group(function () {
+        Route::get("/view", [App\Http\Controllers\ResponseController::class, "responseView"]);
+        Route::get("/json", [App\Http\Controllers\ResponseController::class, "responseJson"]);
+        Route::get("/file", [App\Http\Controllers\ResponseController::class, "responseFile"]);
+        Route::get("/dwonload", [App\Http\Controllers\ResponseController::class, "responseDwonload"]);
+    }); // Route prefix group: dimana kita bisa membuat prefix (awalan) untuk url route, yang awalannya hampir sama semua
+
+    Route::controller(App\Http\Controllers\CookieController::class)->group(function () {
+        Route::get("/cookie/set", "createCookie");
+        Route::get("/cookie/get", "getCookie");
+        Route::get("/cookie/clear", "clearCookie");
+    }); // route controller group: mempermudah ketika kita ingin membuat beberapa route dengan class controller yang sama
 
     Route::get("/redirect/from", [App\Http\Controllers\RedirectController::class, "redirectFrom"]);
     Route::get("/redirect/to", [App\Http\Controllers\RedirectController::class, "redirectTo"]);
@@ -192,15 +197,24 @@ Route::withoutMiddleware([App\Http\Middleware\VerifyCsrfToken::class])->group(fu
     //Route::get("/middleware/api", function (){
     //    return "OK";
     //})->middleware("contoh"); // set dengan alias
-        //->middleware(\App\Http\Middleware\ContohMiddleware::class); // set dengan class middleware
-    Route::get("/middleware/group", function (){
-        return "GROUP";
-    })->middleware(["sb"]); // set dari group
-    Route::get("/middleware/api", function (){
-        return "OK";
-    })->middleware("contoh:SB,401"); // contoh:SB,401 // name_alias_middleware:$key,$status // mengirim parameter ke middleware yang di buat
+    //->middleware(\App\Http\Middleware\ContohMiddleware::class); // set dengan class middleware
+    //Route::get("/middleware/group", function (){
+    //    return "GROUP";
+    //})->middleware(["sb"]); // set dari group
+    //Route::get("/middleware/api", function (){
+    //    return "OK";
+    //})->middleware("contoh:SB,401"); // contoh:SB,401 // name_alias_middleware:$key,$status // mengirim parameter ke middleware yang di buat
 
 }); // tanpa pengecekan middleware csrf_token laravel
+
+Route::middleware(["contoh:SB,401"])->prefix("/middleware")->group(function () {
+    Route::get("/group", function () {
+        return "GROUP";
+    });
+    Route::get("/api", function () {
+        return "OK";
+    });
+}); // route middleware dan prefix group (multiple route group): dimana secara otomatis semua route akan memiliki middleware tersebut
 
 Route::post("/file/upload", [App\Http\Controllers\FileController::class, "upload"])
     ->middleware(App\Http\Middleware\VerifyCsrfToken::class); // Exclude Middleware, non-aktifkan middleware
